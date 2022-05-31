@@ -14,11 +14,47 @@
   <link rel="stylesheet" href="css/reset.css">
   <link rel="stylesheet" href="css/layout.css">
   <link rel="stylesheet" href="css/styles.css">
+  <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;500;600&display=swap" rel="stylesheet">
 </head>
 <body>
   <header>
+    <div class="header white-text">
+      <div class="header-align">
+        <h3>Code Journal</h3>
+      </div>
+    </div>
   </header>
   <main>
+    <div class="container">
+      <div data-view="entry-form">
+        <form>
+          <div class="row">
+            <div class="column-full">
+              <h1>New Entry</h1>
+            </div>
+            <div class="column-half">
+              <img src="images/placeholder-image-square.jpg" alt="entry-img">
+            </div>
+            <div class="column-half">
+              <label for="title">Title</label>
+              <input class="width-100" type="text" required>
+              <label for="photo-url">Photo URL</label>
+              <input class="width-100" type="url" required>
+            </div>
+          </div>
+          <div class="row">
+            <div class="column-full">
+              <label for="notes">Notes</label>
+              <textarea class="width-100 " id="notes" name="notes" rows="5" cols="33"></textarea>
+              <div class="flex-end">
+                <input class="save-button" type="submit" value="SAVE">
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
   </main>
   <script src="js/data.js"></script>
   <script src="js/main.js"></script>
