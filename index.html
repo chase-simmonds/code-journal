@@ -19,9 +19,11 @@
 </head>
 <body>
   <header>
-    <div class="header white-text">
-      <div class="header-align">
-        <h3>Code Journal</h3>
+    <div class="container">
+      <div class="row">
+        <div class="column-full">
+          <h3 class="white-text">Code Journal</h3>
+        </div>
       </div>
     </div>
   </header>
@@ -38,15 +40,15 @@
             </div>
             <div class="column-half">
               <label for="title">Title</label>
-              <input class="width-100" type="text" required>
+              <input type="text" required>
               <label for="photo-url">Photo URL</label>
-              <input class="width-100" type="url" required>
+              <input type="url" id="photoUrl" required>
             </div>
           </div>
           <div class="row">
             <div class="column-full">
               <label for="notes">Notes</label>
-              <textarea class="width-100 " id="notes" name="notes" rows="5" cols="33"></textarea>
+              <textarea id="notes" name="notes" rows="8" cols="33"></textarea>
               <div class="flex-end">
                 <input class="save-button" type="submit" value="SAVE">
               </div>
