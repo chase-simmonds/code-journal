@@ -1,0 +1,54 @@
+header {
+  background-color: #562b80;
+  font-family: Raleway, sans-serif;
+}
+
+body {
+  background-color: #f0f0f0;
+  font-family: Raleway, sans-serif;
+  font-size: 1rem;
+  line-height: 2.6rem;
+}
+
+h1,
+h3, {
+  font-family: "Open Sans", sans-serif;
+  font-size: 1.2rem;
+}
+
+button,
+input,
+textarea,
+select,
+label {
+  font-family: "Open Sans", sans-serif;
+  font-weight: 500;
+}
+
+img {
+  width: 100%;
+}
+
+input,
+textarea {
+  width: 100%;
+}
+
+.white-text {
+  color: white;
+}
+
+.flex-end {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.save-button {
+  background-color: #562b80;
+  width: 3.7rem;
+  height: 1.6rem;
+  border: none;
+  color: white;
+  margin-top: 1rem;
+  border-radius: 0.2rem;
+}
