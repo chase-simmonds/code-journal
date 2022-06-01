@@ -1,8 +1,12 @@
+/* exported data */
+
 var $photoUrl = document.querySelector('#photoUrl');
 var $entryImg = document.querySelector('#entry-img');
 
 function photoUpload(event) {
-  $entryImg.setAttribute('src', event.target.value);
+  if ($entryImg) {
+    $entryImg.setAttribute('src', event.target.value);
+  }
 }
 
 $photoUrl.addEventListener('input', photoUpload);
@@ -19,6 +23,7 @@ function userFormData(event) {
     notes: $entryNotes.value,
     entryId: data.nextEntryId
   };
+
   data.nextEntryId++;
   data.entries.unshift(entryData);
   $entryImg.setAttribute('src', 'images/placeholder-image-square.jpg');
