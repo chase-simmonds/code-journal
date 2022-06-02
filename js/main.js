@@ -51,25 +51,28 @@ function renderEntry(entry) {
   var $listItem = document.createElement('li');
 
   var $imgRow = document.createElement('div');
-  $imgRow.className('row');
-  $imgRow.appendChild($listItem);
+  $imgRow.setAttribute('class', 'row');
+  $listItem.appendChild($imgRow);
 
   var $imgColHalf = document.createElement('div');
-  $imgColHalf.className('column-half');
-  $imgColHalf.appendChild($imgRow);
+  $imgColHalf.setAttribute('class', 'column-half');
+  $imgRow.appendChild($imgColHalf);
 
   var $img = document.createElement('img');
-  $img.appendChild($imgColHalf);
+  $img.setAttribute('src', entry.photoUrl);
+  $imgColHalf.appendChild($img);
 
   var $entryColHalf = document.createElement('div');
-  $entryColHalf.className('column-half');
-  $entryColHalf.appendChild($imgRow);
+  $entryColHalf.setAttribute('class', 'column-half');
+  $imgRow.appendChild($entryColHalf);
 
   var $entryH2 = document.createElement('h2');
-  $entryH2.appendChild($entryColHalf);
+  $entryH2.textContent = entry.title;
+  $entryColHalf.appendChild($entryH2);
 
   var $entryP = document.createElement('p');
-  $entryP.appendChild($entryColHalf);
+  $entryP.textContent = entry.notes;
+  $entryColHalf.appendChild($entryP);
 
   return $listItem;
 }
