@@ -31,3 +31,47 @@ function userFormData(event) {
 }
 
 $entryForm.addEventListener('submit', userFormData);
+
+/* DOM Tree
+
+<li>
+  <div row>
+    <div 1 for column-half>
+      <img>
+    </div 1 column-half>
+    <div 2 for column-half>
+      <h2>
+      <p>
+    </div 2 column-half>
+  </div row>
+</li>
+*/
+
+function renderEntry(entry) {
+  var $listItem = document.createElement('li');
+
+  var $imgRow = document.createElement('div');
+  $imgRow.className('row');
+  $imgRow.appendChild($listItem);
+
+  var $imgColHalf = document.createElement('div');
+  $imgColHalf.className('column-half');
+  $imgColHalf.appendChild($imgRow);
+
+  var $img = document.createElement('img');
+  $img.appendChild($imgColHalf);
+
+  var $entryColHalf = document.createElement('div');
+  $entryColHalf.className('column-half');
+  $entryColHalf.appendChild($imgRow);
+
+  var $entryH2 = document.createElement('h2');
+  $entryH2.appendChild($entryColHalf);
+
+  var $entryP = document.createElement('p');
+  $entryP.appendChild($entryColHalf);
+
+  return $listItem;
+}
+
+renderEntry();
