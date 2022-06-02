@@ -74,4 +74,12 @@ function renderEntry(entry) {
   return $listItem;
 }
 
-renderEntry();
+var $entryList = document.querySelector('ul');
+
+function contentLoaded() {
+  for (var i = 0; i < data.entries.length; i++) {
+    $entryList.appendChild(renderEntry(data.entries[i]));
+  }
+}
+
+window.addEventListener('DOMContentLoaded', contentLoaded);
