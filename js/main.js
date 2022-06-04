@@ -2,6 +2,14 @@
 
 var $photoUrl = document.querySelector('#photoUrl');
 var $entryImg = document.querySelector('#entry-img');
+var $entryForm = document.querySelector('#entry-form');
+var $entryTitle = document.querySelector('#title');
+var $entryNotes = document.querySelector('#notes');
+var $entryList = document.querySelector('ul');
+var $entriesLink = document.querySelector('.entries-link');
+var $entryFormView = document.querySelector('.entry-form-view');
+var $newEntryButton = document.querySelector('#new-button');
+var $entryPostsView = document.querySelector('.entry-posts-view');
 
 function photoUpload(event) {
   if ($entryImg) {
@@ -10,10 +18,6 @@ function photoUpload(event) {
 }
 
 $photoUrl.addEventListener('input', photoUpload);
-
-var $entryForm = document.querySelector('#entry-form');
-var $entryTitle = document.querySelector('#title');
-var $entryNotes = document.querySelector('#notes');
 
 function userFormData(event) {
   event.preventDefault();
@@ -26,6 +30,7 @@ function userFormData(event) {
 
   data.nextEntryId++;
   data.entries.unshift(entryData);
+  $entryList.prepend(renderEntry(entryData));
   $entryImg.setAttribute('src', 'images/placeholder-image-square.jpg');
   $entryForm.reset();
 }
@@ -77,8 +82,6 @@ function renderEntry(entry) {
   return $listItem;
 }
 
-var $entryList = document.querySelector('ul');
-
 function contentLoaded() {
   for (var i = 0; i < data.entries.length; i++) {
     $entryList.appendChild(renderEntry(data.entries[i]));
@@ -86,3 +89,17 @@ function contentLoaded() {
 }
 
 window.addEventListener('DOMContentLoaded', contentLoaded);
+
+function entriesViewSwap(event) {
+  $entryFormView.setAttribute('class', 'hidden');
+  $entryPostsView.setAttribute('class', 'entry-posts-view');
+}
+
+$entriesLink.addEventListener('click', entriesViewSwap);
+
+function newViewSwap(event) {
+  $entryPostsView.setAttribute('class', 'hidden');
+  $entryFormView.setAttribute('class', 'entry-form-view');
+}
+
+$newEntryButton.addEventListener('click', newViewSwap);
