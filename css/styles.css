@@ -32,6 +32,7 @@ img {
 input,
 textarea {
   width: 100%;
+  resize: none;
 }
 
 .white-text {

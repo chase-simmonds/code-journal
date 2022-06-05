@@ -6,10 +6,8 @@ var $entryForm = document.querySelector('#entry-form');
 var $entryTitle = document.querySelector('#title');
 var $entryNotes = document.querySelector('#notes');
 var $entryList = document.querySelector('ul');
-var $entriesLink = document.querySelector('.entries-link');
-var $entryFormView = document.querySelector('.entry-form-view');
-var $newEntryButton = document.querySelector('#new-button');
-var $entryPostsView = document.querySelector('.entry-posts-view');
+
+// upload photo when URL is pasted
 
 function photoUpload(event) {
   if ($entryImg) {
@@ -18,6 +16,11 @@ function photoUpload(event) {
 }
 
 $photoUrl.addEventListener('input', photoUpload);
+
+// submitting form data
+
+var $dataViewEntryForm = document.querySelector('[data-view="entry-form"]');
+var $dataViewEntries = document.querySelector('[data-view="entries"]');
 
 function userFormData(event) {
   event.preventDefault();
@@ -32,13 +35,17 @@ function userFormData(event) {
   data.entries.unshift(entryData);
   $entryList.prepend(renderEntry(entryData));
   $entryImg.setAttribute('src', 'images/placeholder-image-square.jpg');
+  $dataViewEntryForm.setAttribute('class', 'hidden');
+  $dataViewEntries.setAttribute('class', 'view');
+  data.view = 'entries';
   $entryForm.reset();
 }
 
 $entryForm.addEventListener('submit', userFormData);
 
-/* DOM Tree
+// DOM Tree
 
+/*
 <li>
   <div row>
     <div 1 for column-half>
@@ -51,6 +58,8 @@ $entryForm.addEventListener('submit', userFormData);
   </div row>
 </li>
 */
+
+// rendering DOM tree for entries
 
 function renderEntry(entry) {
   var $listItem = document.createElement('li');
@@ -77,29 +86,56 @@ function renderEntry(entry) {
 
   var $entryP = document.createElement('p');
   $entryP.textContent = entry.notes;
+
+  // immediately append new post to page w/o refreshing
+
   $entryColHalf.appendChild($entryP);
 
   return $listItem;
 }
 
-function contentLoaded() {
+// append to page when when DOMContentLoaded is fired
+
+function domContentLoaded(event) {
   for (var i = 0; i < data.entries.length; i++) {
     $entryList.appendChild(renderEntry(data.entries[i]));
   }
 }
 
-window.addEventListener('DOMContentLoaded', contentLoaded);
+window.addEventListener('DOMContentLoaded', domContentLoaded);
 
-function entriesViewSwap(event) {
-  $entryFormView.setAttribute('class', 'hidden');
-  $entryPostsView.setAttribute('class', 'entry-posts-view');
+var $newEntryButton = document.querySelector('#new-button');
+var $entries = document.querySelector('#entries');
+
+// switch to new entry view when new button is clicked
+
+function newEntryView(event) {
+  $dataViewEntries.setAttribute('class', 'hidden');
+  $dataViewEntryForm.setAttribute('class', 'view');
+  data.view = 'entry-form';
 }
 
-$entriesLink.addEventListener('click', entriesViewSwap);
+$newEntryButton.addEventListener('click', newEntryView);
 
-function newViewSwap(event) {
-  $entryPostsView.setAttribute('class', 'hidden');
-  $entryFormView.setAttribute('class', 'entry-form-view');
+// switch to posted entries view when entries link is clicked
+
+function postedEntriesView(event) {
+  $dataViewEntryForm.setAttribute('class', 'hidden');
+  $dataViewEntries.setAttribute('class', 'view');
+  data.view = 'entries';
 }
 
-$newEntryButton.addEventListener('click', newViewSwap);
+$entries.addEventListener('click', postedEntriesView);
+
+// keep current view even if page is refreshed
+
+function keepCurrentView(event) {
+  if (data.view === 'entries') {
+    $dataViewEntryForm.setAttribute('class', 'hidden');
+    $dataViewEntries.setAttribute('class', 'view');
+  } else if (data.view === 'entry-form') {
+    $dataViewEntries.setAttribute('class', 'hidden');
+    $dataViewEntryForm.setAttribute('class', 'view');
+  }
+}
+window.addEventListener('DOMContentLoaded', keepCurrentView);
