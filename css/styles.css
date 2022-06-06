@@ -32,6 +32,7 @@ img {
 input,
 textarea {
   width: 100%;
+  resize: none;
 }
 
 .white-text {
@@ -43,7 +44,12 @@ textarea {
   justify-content: flex-end;
 }
 
-.save-button {
+.space-between {
+  display: flex;
+  justify-content: space-between;
+}
+
+.button {
   background-color: #562b80;
   width: 3.7rem;
   height: 1.6rem;
@@ -51,4 +57,27 @@ textarea {
   color: white;
   margin-top: 1rem;
   border-radius: 0.2rem;
+}
+
+ul {
+  list-style: none;
+  margin: 0 auto;
+  padding: 0;
+}
+
+h2 {
+  margin: 0;
+}
+
+.entries-link {
+  text-decoration: none;
+  color: white;
+  font-size: 1rem;
+  align-self: center;
+  padding-left: 2rem;
+}
+
+.flex-row {
+  display: flex;
+  flex-direction: row;
 }
