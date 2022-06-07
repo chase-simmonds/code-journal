@@ -84,6 +84,14 @@ function renderEntry(entry) {
   $entryH2.textContent = entry.title;
   $entryColHalf.appendChild($entryH2);
 
+  // edit icon
+
+  var $editIcon = document.createElement('img');
+  $editIcon.setAttribute('src', 'images/icons8-edit-24.png');
+  $editIcon.setAttribute('class', 'edit-image');
+  $editIcon.setAttribute('data-entry-id', entry.entryId);
+  $entryH2.appendChild($editIcon);
+
   var $entryP = document.createElement('p');
   $entryP.textContent = entry.notes;
 
