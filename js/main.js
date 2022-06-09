@@ -63,6 +63,7 @@ $entryForm.addEventListener('submit', userFormData);
 
 function renderEntry(entry) {
   var $listItem = document.createElement('li');
+  $listItem.setAttribute('data-entry-id', entry.entryId);
 
   var $imgRow = document.createElement('div');
   $imgRow.setAttribute('class', 'row');
@@ -147,3 +148,24 @@ function keepCurrentView(event) {
   }
 }
 window.addEventListener('DOMContentLoaded', keepCurrentView);
+
+// event listener for edit icon
+
+function editEntry(event) {
+  if (event.target.tagName === 'IMG') {
+    $dataViewEntries.setAttribute('class', 'hidden');
+    $dataViewEntryForm.setAttribute('class', 'view');
+    data.view = 'entry-form';
+  }
+  // find entry object
+  var $editEntryLi = event.target.closest('li');
+  var currentEditId = $editEntryLi.getAttribute('data-entry-id');
+  data.editing = currentEditId;
+  for (var i = 0; i < data.entries.length; i++) {
+    if (currentEditId === data.entries[i].entryId.toString()) {
+      data.editing = data.entries[i];
+    }
+  }
+}
+
+$entryList.addEventListener('click', editEntry);
