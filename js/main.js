@@ -159,13 +159,27 @@ function editEntry(event) {
   }
   // find entry object
   var $editEntryLi = event.target.closest('li');
-  var currentEditId = $editEntryLi.getAttribute('data-entry-id');
-  data.editing = currentEditId;
+  var $currentEditId = $editEntryLi.getAttribute('data-entry-id');
+  data.editing = $currentEditId;
   for (var i = 0; i < data.entries.length; i++) {
-    if (currentEditId === data.entries[i].entryId.toString()) {
+    if ($currentEditId === data.entries[i].entryId.toString()) {
       data.editing = data.entries[i];
+      prepopulateData(data.entries[i]);
     }
   }
 }
 
 $entryList.addEventListener('click', editEntry);
+
+// prepopulate data when editing
+// FIX EVERYTHING BELOW THIS
+var $entryHeader = document.querySelector('#entry-header');
+
+function prepopulateData(entry) {
+  $entryHeader.textContent = 'Edit Entry';
+  $photoUrl.value = entry.photoUrl;
+  $entryTitle.value = entry.title;
+  $entryNotes.value = entry.notes;
+  photoUpload();
+  data.view = 'entry-form';
+}
