@@ -11,9 +11,7 @@ var $editEntry = null;
 // upload photo when URL is pasted
 
 function photoUpload(event) {
-  if ($entryImg) {
-    $entryImg.setAttribute('src', event.target.value);
-  }
+  $entryImg.setAttribute('src', event.target.value);
 }
 
 $photoUrl.addEventListener('input', photoUpload);
@@ -21,12 +19,12 @@ $photoUrl.addEventListener('input', photoUpload);
 var $dataViewEntryForm = document.querySelector('[data-view="entry-form"]');
 var $dataViewEntries = document.querySelector('[data-view="entries"]');
 
-// submitting form data
+// saving form data
 
-function userFormData(event) {
+function saveEntry(event) {
   event.preventDefault();
   var entryData = {};
-  // conditional for editing vs new post
+  // conditional for editing post vs new post
   if (data.editing !== null) {
     entryData = {
       title: $entryTitle.value,
@@ -37,7 +35,7 @@ function userFormData(event) {
     for (var i = 0; i < data.entries.length; i++) {
       if (data.entries[i] === data.editing) {
         data.entries[i] = entryData;
-        $entryList.children[i] = renderEntry(entryData);
+        $entryList.children = renderEntry(entryData);
         $editEntry.replaceWith(renderEntry(entryData));
       }
     }
@@ -61,7 +59,7 @@ function userFormData(event) {
   $entryForm.reset();
 }
 
-$entryForm.addEventListener('submit', userFormData);
+$entryForm.addEventListener('submit', saveEntry);
 
 // DOM Tree
 
