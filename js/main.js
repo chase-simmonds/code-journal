@@ -6,6 +6,7 @@ var $entryForm = document.querySelector('#entry-form');
 var $entryTitle = document.querySelector('#title');
 var $entryNotes = document.querySelector('#notes');
 var $entryList = document.querySelector('ul');
+var $editEntry = null;
 
 // upload photo when URL is pasted
 
@@ -17,23 +18,42 @@ function photoUpload(event) {
 
 $photoUrl.addEventListener('input', photoUpload);
 
-// submitting form data
-
 var $dataViewEntryForm = document.querySelector('[data-view="entry-form"]');
 var $dataViewEntries = document.querySelector('[data-view="entries"]');
 
+// submitting form data
+
 function userFormData(event) {
   event.preventDefault();
-  var entryData = {
-    title: $entryTitle.value,
-    photoUrl: $photoUrl.value,
-    notes: $entryNotes.value,
-    entryId: data.nextEntryId
-  };
+  var entryData = {};
+  // conditional for editing vs new post
+  if (data.editing !== null) {
+    entryData = {
+      title: $entryTitle.value,
+      photoUrl: $photoUrl.value,
+      notes: $entryNotes.value,
+      entryId: data.editing.entryId
+    };
+    for (var i = 0; i < data.entries.length; i++) {
+      if (data.entries[i] === data.editing) {
+        data.entries[i] = entryData;
+        $entryList.children[i] = renderEntry(entryData);
+        $editEntry.replaceWith(renderEntry(entryData));
+      }
+    }
+    data.editing = null;
 
-  data.nextEntryId++;
-  data.entries.unshift(entryData);
-  $entryList.prepend(renderEntry(entryData));
+  } else {
+    entryData = {
+      title: $entryTitle.value,
+      photoUrl: $photoUrl.value,
+      notes: $entryNotes.value,
+      entryId: data.nextEntryId
+    };
+    data.nextEntryId++;
+    data.entries.unshift(entryData);
+    $entryList.prepend(renderEntry(entryData));
+  }
   $entryImg.setAttribute('src', 'images/placeholder-image-square.jpg');
   $dataViewEntryForm.setAttribute('class', 'hidden');
   $dataViewEntries.setAttribute('class', 'view');
@@ -103,6 +123,27 @@ function renderEntry(entry) {
   return $listItem;
 }
 
+// listen for clicks on parent element of all rendered entries
+
+function editClick(event) {
+  if (event.target.className === 'edit-image') {
+    $editEntry = event.target.closest('li');
+    $dataViewEntryForm.setAttribute('class', 'view');
+    $dataViewEntries.setAttribute('class', 'hidden');
+    for (var i = 0; i < data.entries.length; i++) {
+      if (data.entries[i].entryId.toString() === event.target.getAttribute('data-entry-id')) {
+        data.editing = data.entries[i];
+      }
+    }
+    $entryTitle.value = data.editing.title;
+    $photoUrl.value = data.editing.photoUrl;
+    $entryNotes.value = data.editing.notes;
+    $entryImg.src = data.editing.photoUrl;
+  }
+}
+
+$entryList.addEventListener('click', editClick);
+
 // append to page when when DOMContentLoaded is fired
 
 function domContentLoaded(event) {
@@ -148,38 +189,3 @@ function keepCurrentView(event) {
   }
 }
 window.addEventListener('DOMContentLoaded', keepCurrentView);
-
-// event listener for edit icon
-
-function editEntry(event) {
-  if (event.target.tagName === 'IMG') {
-    $dataViewEntries.setAttribute('class', 'hidden');
-    $dataViewEntryForm.setAttribute('class', 'view');
-    data.view = 'entry-form';
-  }
-  // find entry object
-  var $editEntryLi = event.target.closest('li');
-  var $currentEditId = $editEntryLi.getAttribute('data-entry-id');
-  data.editing = $currentEditId;
-  for (var i = 0; i < data.entries.length; i++) {
-    if ($currentEditId === data.entries[i].entryId.toString()) {
-      data.editing = data.entries[i];
-      prepopulateData(data.entries[i]);
-    }
-  }
-}
-
-$entryList.addEventListener('click', editEntry);
-
-// prepopulate data when editing
-// FIX EVERYTHING BELOW THIS
-var $entryHeader = document.querySelector('#entry-header');
-
-function prepopulateData(entry) {
-  $entryHeader.textContent = 'Edit Entry';
-  $photoUrl.value = entry.photoUrl;
-  $entryTitle.value = entry.title;
-  $entryNotes.value = entry.notes;
-  photoUpload();
-  data.view = 'entry-form';
-}
