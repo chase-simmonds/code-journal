@@ -191,8 +191,12 @@ window.addEventListener('DOMContentLoaded', keepCurrentView);
 
 // delete button
 
-function deleteClick(event) {
+var $modalToggle = document.querySelector('#modal-toggle');
 
+function deleteClick(event) {
+  if (event.target.className === 'delete-red') {
+    $modalToggle.setAttribute('class', 'view');
+  }
 }
 
 $delete.addEventListener('click', deleteClick);
