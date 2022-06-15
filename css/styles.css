@@ -41,7 +41,7 @@ textarea {
 
 .flex-end {
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-between;
 }
 
 .space-between {
@@ -86,4 +86,12 @@ h2 {
   width: 24px;
   height: 24px;
   margin-left: 1rem;
+}
+
+.delete-link {
+  color: #f0f0f0;
+}
+
+.delete-red {
+  color: red;
 }

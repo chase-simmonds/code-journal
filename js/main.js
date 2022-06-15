@@ -7,6 +7,7 @@ var $entryTitle = document.querySelector('#title');
 var $entryNotes = document.querySelector('#notes');
 var $entryList = document.querySelector('ul');
 var $editEntry = null;
+var $delete = document.querySelector('#delete');
 
 // upload photo when URL is pasted
 
@@ -127,6 +128,7 @@ function editClick(event) {
     $editEntry = event.target.closest('li');
     $dataViewEntryForm.setAttribute('class', 'view');
     $dataViewEntries.setAttribute('class', 'hidden');
+    $delete.setAttribute('class', 'delete-red');
     for (var i = 0; i < data.entries.length; i++) {
       if (data.entries[i].entryId.toString() === event.target.getAttribute('data-entry-id')) {
         data.editing = data.entries[i];
@@ -186,3 +188,11 @@ function keepCurrentView(event) {
   }
 }
 window.addEventListener('DOMContentLoaded', keepCurrentView);
+
+// delete button
+
+function deleteClick(event) {
+
+}
+
+$delete.addEventListener('click', deleteClick);
