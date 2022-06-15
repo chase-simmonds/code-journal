@@ -200,3 +200,13 @@ function deleteClick(event) {
 }
 
 $delete.addEventListener('click', deleteClick);
+
+var $cancelButton = document.querySelector('#cancel-button');
+
+function cancelDelete(event) {
+  if (event.target.className === 'cancel-button') {
+    $modalToggle.setAttribute('class', 'hidden');
+  }
+}
+
+$cancelButton.addEventListener('click', cancelDelete);
