@@ -7,7 +7,6 @@ var $entryTitle = document.querySelector('#title');
 var $entryNotes = document.querySelector('#notes');
 var $entryList = document.querySelector('ul');
 var $editEntry = null;
-var $delete = document.querySelector('#delete');
 
 // upload photo when URL is pasted
 
@@ -22,9 +21,10 @@ var $dataViewEntries = document.querySelector('[data-view="entries"]');
 
 // saving form data
 
+var entryData = {};
+
 function saveEntry(event) {
   event.preventDefault();
-  var entryData = {};
   // conditional for editing post vs new post
   if (data.editing !== null) {
     entryData = {
@@ -189,9 +189,11 @@ function keepCurrentView(event) {
 }
 window.addEventListener('DOMContentLoaded', keepCurrentView);
 
-// delete button
+// modal pop up if delete entry is clicked
 
 var $modalToggle = document.querySelector('#modal-toggle');
+
+var $delete = document.querySelector('#delete');
 
 function deleteClick(event) {
   if (event.target.className === 'delete-red') {
@@ -200,6 +202,8 @@ function deleteClick(event) {
 }
 
 $delete.addEventListener('click', deleteClick);
+
+// cancel delete button
 
 var $cancelButton = document.querySelector('#cancel-button');
 
@@ -210,3 +214,24 @@ function cancelDelete(event) {
 }
 
 $cancelButton.addEventListener('click', cancelDelete);
+
+// delete entry
+
+var $confirmButton = document.querySelector('#confirm-button');
+
+function deleteEntry(event) {
+  if (event.target.className === 'confirm-button') {
+    for (var i = 0; i < data.entries.length; i++) {
+      if (data.entries[i] === data.editing) {
+        data.entries.splice(i, 1);
+      }
+    }
+    $editEntry.remove();
+    $modalToggle.setAttribute('class', 'hidden');
+    $dataViewEntryForm.setAttribute('class', 'hidden');
+    $dataViewEntries.setAttribute('class', 'view');
+    data.view = 'entries';
+  }
+}
+
+$confirmButton.addEventListener('click', deleteEntry);
