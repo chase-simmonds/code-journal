@@ -35,7 +35,6 @@ function saveEntry(event) {
     for (var i = 0; i < data.entries.length; i++) {
       if (data.entries[i] === data.editing) {
         data.entries[i] = entryData;
-        $entryList.children = renderEntry(entryData);
         $editEntry.replaceWith(renderEntry(entryData));
       }
     }
